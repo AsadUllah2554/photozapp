@@ -14,17 +14,16 @@ export interface Photo {
     description?: string | null;
     createdAt: Date;
     userId: string;
-    user?: User;
-    comments?: Comment[];
+    user?: User | null;
+    comments?: Comment[] | null;
   }
-  
-  // Comment Type
+
   export interface Comment {
     id: string;
     text: string;
     createdAt: Date;
     userId: string;
     photoId: string;
-    user?: User;
+    user?: User | null;
     photo?: Photo;
   }

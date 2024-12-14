@@ -1,18 +1,12 @@
-
 import "./ProfileCard.css";
 import { useUserContext } from "../../hooks/useUserContext";
 
-
-import {
-  Avatar,
-  Card,
-} from "antd";
+import { Avatar, Card } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { defaultCoverImage, defaultProfileImage } from "@/common/common";
 
 const ProfileCard = () => {
   const { user, logout } = useUserContext();
-
 
   return (
     <div className="ProfileCard">
@@ -21,7 +15,7 @@ const ProfileCard = () => {
           className="mb-6 overflow-hidden"
           cover={
             <img
-              src={ defaultCoverImage}
+              src={defaultCoverImage}
               alt="Cover"
               style={{ width: "100%", height: "120px", objectFit: "cover" }} // Adjust the size to match the previous div
             />
@@ -32,7 +26,7 @@ const ProfileCard = () => {
               size={100}
               icon={<UserOutlined />}
               className="absolute -top-16 left-1/2 transform -translate-x-1/2 border-4 border-white"
-              src={ defaultProfileImage}
+              src={defaultProfileImage}
             />
           </div>
           <div className="mt-8 text-center">
@@ -48,7 +42,12 @@ const ProfileCard = () => {
                 <p className="text-gray-600">Friends</p>
               </div>
             </div>
-            <span onClick={()=>{console.log("My profile")}} className="profileBtn ">
+            <span
+              onClick={() => {
+                console.log("My profile");
+              }}
+              className="profileBtn "
+            >
               My Profile
             </span>
             <button className=" r-button align-middle" onClick={logout}>
@@ -57,7 +56,6 @@ const ProfileCard = () => {
           </div>
         </Card>
       </div>
-
     </div>
   );
 };

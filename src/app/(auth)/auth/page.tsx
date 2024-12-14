@@ -71,35 +71,35 @@ export default function Signup() {
     }
   };
 
-  const loginAsGuest = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.post(
-        `${process.env.SERVER_URL}auth/guest`,
-        {},
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+  // const loginAsGuest = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await axios.post(
+  //       `${process.env.SERVER_URL}auth/guest`,
+  //       {},
+  //       {
+  //         headers: { "Content-Type": "application/json" },
+  //       }
+  //     );
 
-      if (response.status === 200 ) {
-        setUser(
-          response.data.user,
+  //     if (response.status === 200 ) {
+  //       setUser(
+  //         response.data.user,
          
-    );
-        setLoading(false);
-        router.push("/");
-      } else {
-        setLoading(false);
-        message.error("Guest login failed: " + response.data.message);
-      }
-    } catch (error: unknown) {
-      setLoading(false);
-      message.error("Error in guest login " + (error as any).message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   );
+  //       setLoading(false);
+  //       router.push("/");
+  //     } else {
+  //       setLoading(false);
+  //       message.error("Guest login failed: " + response.data.message);
+  //     }
+  //   } catch (error: unknown) {
+  //     setLoading(false);
+  //     message.error("Error in guest login " + (error as any).message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   return (
     <div>
       <div className="w-full flex items-center justify-center mt-8 ">
@@ -147,7 +147,7 @@ export default function Signup() {
               {isSignUp ? "Sign Up" : "Sign In"}
             </Button>
           </form>
-          <Button
+          {/* <Button
             type="primary"
             htmlType="submit"
             className="w-full mt-4 h-12 bg-blue-600 hover:bg-blue-700 border-0 text-lg"
@@ -155,7 +155,7 @@ export default function Signup() {
             disabled={loading}
           >
             Roam as Guest User
-          </Button>
+          </Button> */}
           <Divider>
             <span className="text-gray-500">OR</span>
           </Divider>

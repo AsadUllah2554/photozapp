@@ -1,15 +1,15 @@
 "use client";
 
 import { useUserContext } from "@/hooks/useUserContext";
-import { Button, Card, Input, message, Modal } from "antd";
+import { Card,  message, } from "antd";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
 import { PostSkeletonList } from "@/components/Skeleton/Skeleton";
 import ProfileCard from "@/components/ProfileCard/ProfileCard";
 import PostShare from "@/components/PostShare/PostShare";
-import Post from "@/components/Post/Post";
 import NotificationCard from "@/components/NotificationCard/NotificationCard";
+import { Photo } from "@/common/types";
+import Post from "@/components/Post/Post";
 
 export default function Home() {
   const { user, posts, setPosts } = useUserContext();
@@ -42,7 +42,7 @@ export default function Home() {
     };
   }, [user]);
 
-  const [selectedPost, setSelectedPost] = useState(null);
+
   return (
     <>  
     <h1 className=" mt-10 mx-8  text-4xl font-bold mb-5">Photoz App</h1>
@@ -50,17 +50,17 @@ export default function Home() {
       
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <ProfileCard />
-          {/* Center: Timeline */}
+    
           <div>
-            {/* Create Post Section */}
+          
             <PostShare />
 
             {/* Posts */}
             {loading ? (
               <PostSkeletonList count={4} />
             ) : (
-              posts.map((post) => (
-                <Post post={post} id={post._id} key={post.id} />
+              posts.map((post: Photo) => (
+                <Post post={post} key={post.id} />
               ))
             )}
           </div>
@@ -88,29 +88,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Comments Modal */}
-      <Modal
-        title="Comments"
-        open={!!selectedPost}
-        onCancel={() => setSelectedPost(null)}
-        footer={null}
-      >
-        {selectedPost && (
-          <div>
-            <div className="mb-4">
-              <Input.TextArea
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-                placeholder="Write a comment..."
-                autoSize={{ minRows: 3, maxRows: 5 }}
-              />
-            </div>
-            <Button type="primary" onClick={handleAddComment} className="mt-2">
-              Add Comment
-            </Button>
-          </div>
-        )}
-      </Modal>
+     
     </>
   );
 }

@@ -71,7 +71,11 @@ const PostShare = () => {
     if (file) {
       const reader = new FileReader();
 
-      reader.onloadend = () => setPostImage(reader.result);
+      reader.onloadend = () => {
+        if (reader.result && typeof reader.result === 'string') {
+          setPostImage(reader.result);
+        }
+      };
       reader.readAsDataURL(file);
       setImage(file);
     }

@@ -5,15 +5,16 @@ import { Avatar, Button, Card, Input, message, Modal } from "antd";
 import { CommentOutlined } from "@ant-design/icons";
 import { defaultProfileImage, formatTimeAgo } from "@/common/common";
 import { useUserContext } from "@/hooks/useUserContext";
+import { Photo } from "@/common/types";
 
-const Post = ({ post }: any) => {
-  const { posts, setPosts } = useUserContext();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+interface PostProps {
+  post: Photo;
+}
+const Post: React.FC<PostProps> = ({ post }) => {
+  const { setPosts } = useUserContext();
   const [commentText, setCommentText] = useState("");
-  const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedPost, setSelectedPost] = useState<Photo | null>(null);
   const [showAllComments, setShowAllComments] = useState(false);
-  const [comments, setComments] = useState(post.comments);
-  const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const { user } = useUserContext();
 
@@ -22,18 +23,13 @@ const Post = ({ post }: any) => {
     ? post.comments ?? []
     : (post.comments ?? []).slice(0, initialCommentsToShow);
 
-  const handleOpenComments = (post) => {
+  const handleOpenComments = (post: Photo) => {
     setSelectedPost(post);
   };
 
-  const handleExpandComments = () => {
-    setShowAllComments(true);
-  };
   const handlePostComment = async () => {
     if (!commentText.trim()) return;
-    console.log("User Id post : " + user.id);
-    console.log("Post Id post : " + post.id);
-    console.log("Cmment text" + commentText);
+
     try {
       setLoading(true);
       const response = await axios.post(
@@ -47,13 +43,12 @@ const Post = ({ post }: any) => {
       );
       if (response.status === 201) {
         message.success("Comment added successfully");
-        console.log("Comment Data: " + JSON.stringify(response.data, null, 2));
-        setPosts((prevPosts) =>
+        setPosts((prevPosts: Photo[]) =>
           prevPosts.map((post) =>
             post.id === response.data.comment.photoId
               ? {
                   ...post,
-                  comments: [...post.comments, response.data.comment],
+                  comments: [...(post.comments ?? []), response.data.comment],
                 }
               : post
           )
@@ -73,11 +68,11 @@ const Post = ({ post }: any) => {
 
   return (
     <>
-      <Card key={post._id} className="mb-4">
+      <Card key={post.id} className="mb-4">
         <div className="flex items-center mb-4">
           <Avatar src={defaultProfileImage} className="mr-4 cursor-pointer" />
           <div>
-            <h3 className="font-bold cursor-pointer">{post.user.name}</h3>
+            <h3 className="font-bold cursor-pointer">{post.user?.name}</h3>
             <p className="text-gray-500 text-sm">
               {formatTimeAgo(post.createdAt)}
             </p>
@@ -97,11 +92,15 @@ const Post = ({ post }: any) => {
             onClick={() => handleOpenComments(post)}
           >
             <CommentOutlined />
-            <span>{post.comments > 0 && post.comments}</span>
+            <span>
+              {Array.isArray(post.comments) &&
+                post.comments.length > 0 &&
+                post.comments.length}
+            </span>
           </div>
         </div>
         {/* Comments Preview */}
-        {post.comments.length > 0 && (
+        {(post.comments?.length ?? 0) > 0 && (
           <div className="mt-4 border-t pt-2">
             {commentsToDisplay.map((comment, index) => (
               <div key={index} className="mb-2">
@@ -112,20 +111,20 @@ const Post = ({ post }: any) => {
                     className="mr-2"
                   />
                   <div>
-                    <span className="font-bold mr-2">{comment.user.name}</span>
+                    <span className="font-bold mr-2">{comment.user?.name}</span>
                     <span>{comment.text}</span>
                   </div>
                 </div>
               </div>
             ))}
 
-            {post.comments.length > initialCommentsToShow &&
+            {post.comments && post.comments.length > initialCommentsToShow &&
               !showAllComments && (
                 <button
                   className="text-blue-600 hover:underline"
                   onClick={() => setShowAllComments(true)}
                 >
-                  Show all comments ({post.comments.length})
+                  Show all comments ({post.comments?.length})
                 </button>
               )}
           </div>
