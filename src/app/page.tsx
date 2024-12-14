@@ -1,10 +1,10 @@
 "use client";
 
 import { useUserContext } from "@/hooks/useUserContext";
-import { Button, Card, message, Modal } from "antd";
+import { Button, Card, Input, message, Modal } from "antd";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Input } from "postcss";
+
 import { PostSkeletonList } from "@/components/Skeleton/Skeleton";
 import ProfileCard from "@/components/ProfileCard/ProfileCard";
 import PostShare from "@/components/PostShare/PostShare";
