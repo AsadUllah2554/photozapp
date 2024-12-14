@@ -12,7 +12,7 @@ export default function Signup() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const {user, setUser } = useUserContext();
+  const {setUser } = useUserContext();
   const [formData, setFormData] = useState({
     name: "",
     username: "",
