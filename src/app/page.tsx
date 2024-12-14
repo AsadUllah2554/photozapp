@@ -21,7 +21,13 @@ export default function Home() {
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`/api/post/fetch`);
+      const response = await axios.get(`/api/post/fetch`, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
       setPosts(response.data.posts);
       setLoading(false);
     } catch (error) {
