@@ -6,12 +6,10 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/hooks/useUserContext";
 
-
 export default function Signup() {
   const router = useRouter();
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const {setUser } = useUserContext();
   const [formData, setFormData] = useState({
     name: "",
