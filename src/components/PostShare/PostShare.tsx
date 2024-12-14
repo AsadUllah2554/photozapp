@@ -14,8 +14,7 @@ const PostShare = () => {
   const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const { user, posts, setPosts } = useUserContext();
-  console.log("User in : " + JSON.stringify(user, null, 2));
-  console.log("User Id : " + user.id);
+ 
   const handlePostSubmit = async (e: any) => {
     if (e) {
       e.preventDefault();
@@ -48,7 +47,6 @@ const PostShare = () => {
         setPostContent("");
         setImage(null);
         setPostImage(null);
-        console.log("Response Data: " + JSON.stringify(response.data, null, 2));
         setPosts((prevPosts: any) => [response.data.photo, ...prevPosts]);
         setLoading(false);
       }
@@ -61,7 +59,7 @@ const PostShare = () => {
         `Error sharing post: ${error.response?.data?.message || error.message}`
       );
     } finally {
-      // Ensure loading state is always turned off
+     
       setLoading(false);
     }
   };

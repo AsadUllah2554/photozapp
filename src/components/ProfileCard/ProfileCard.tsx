@@ -17,7 +17,7 @@ const ProfileCard = () => {
             <img
               src={defaultCoverImage}
               alt="Cover"
-              style={{ width: "100%", height: "120px", objectFit: "cover" }} // Adjust the size to match the previous div
+              style={{ width: "100%", height: "120px", objectFit: "cover" }} 
             />
           }
         >

@@ -10,17 +10,18 @@ import PostShare from "@/components/PostShare/PostShare";
 import NotificationCard from "@/components/NotificationCard/NotificationCard";
 import { Photo } from "@/common/types";
 import Post from "@/components/Post/Post";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { user, posts, setPosts } = useUserContext();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  console.log("Post: " + posts)
+
   const fetchPosts = async () => {
     try {
       setLoading(true);
       const response = await axios.get(`/api/post/fetch`);
-      console.log("Response: " + JSON.stringify(response.data, null, 2));
       setPosts(response.data.posts);
       setLoading(false);
     } catch (error) {
@@ -42,7 +43,9 @@ export default function Home() {
     };
   }, [user]);
 
-
+  if(!user) {
+    return router.push("/auth");
+  }
   return (
     <>  
     <h1 className=" mt-10 mx-8  text-4xl font-bold mb-5">Photoz App</h1>

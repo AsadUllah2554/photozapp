@@ -6,8 +6,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { text, userId, photoId } = body;
 
-    console.log("Comment Data: " + JSON.stringify(req.body, null, 2));
-    // Validate required fields
+    
     if (!text || !userId || !photoId) {
       return NextResponse.json(
         { error: "All fields (text, userId, photoId) are required." },

@@ -13,7 +13,6 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
 
   const {user, setUser } = useUserContext();
-    console.log("User: " + JSON.stringify(user, null, 2));
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -44,9 +43,8 @@ export default function Signup() {
       const response = await axios.post(`${endpoint}`, formData, {
         headers: { "Content-Type": "application/json" },
       });
-      console.log("Res data: " + JSON.stringify(response.data, null, 2));
 
-      if (response.status === 201 ) {
+      if (response.status === 200 ) {
         message.success("User " + (isSignUp ? "signed up" : "signed in") + " successfully");
         setUser(response.data.user);
         setLoading(false);
@@ -161,7 +159,7 @@ export default function Signup() {
           </Divider>
 
           <p className="text-center mt-6 text-gray-600">
-            {isSignUp ? "Already a member? " : "New to Gamers Hideout? "}
+            {isSignUp ? "Already a member? " : "New to Photoz App? "}
             <Button
               type="link"
               onClick={toggleSignUp}
